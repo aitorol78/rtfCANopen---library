@@ -1,0 +1,92 @@
+// CANOpen6.lkr
+//
+//	para el PIC16F876
+
+// Este archivo indica al linker como
+// linkar los diferentes módulos.
+
+//;Copyright (C) 2001  Aitor Olarra
+
+//;This library is free software; you can redistribute it and/or
+//;modify it under the terms of the GNU Library General Public
+//;License as published by the Free Software Foundation; either
+//;version 2 of the License, or (at your option) any later version.
+//;
+//;This library is distributed in the hope that it will be useful,
+//;but WITHOUT ANY WARRANTY; without even the implied warranty of
+//;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//;Library General Public License for more details.
+//;
+//;You should have received a copy of the GNU Library General Public
+//;License along with this library; if not, write to the
+//;Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+//;Boston, MA  02111-1307, USA.
+
+LIBPATH  .
+
+CODEPAGE   NAME=vectors  START=0x0      END=0x3      PROTECTED 
+CODEPAGE   NAME=vectors2 START=0x4	END=0x0f     PROTECTED
+CODEPAGE   NAME=eepPage0 START=0x10     END=0x2f     PROTECTED	
+CODEPAGE   NAME=spiPage0 START=0x30     END=0x5f     PROTECTED
+CODEPAGE   NAME=page0    START=0x60     END=0x5FF
+CODEPAGE   NAME=isr      START=0x600    END=0x6FF    PROTECTED
+CODEPAGE   NAME=appTabla1 START=0x700    END=0x73F    PROTECTED 
+CODEPAGE   NAME=appTabla2 START=0x740    END=0x77F    PROTECTED 
+CODEPAGE   NAME=appTabla3 START=0x780    END=0x7BF    PROTECTED 
+CODEPAGE   NAME=appTabla4 START=0x7C0    END=0x7FF    PROTECTED 
+CODEPAGE   NAME=eepPage1 START=0x810    END=0x82f    PROTECTED   
+CODEPAGE   NAME=spiPage1 START=0x830    END=0x83f    PROTECTED
+CODEPAGE   NAME=nmtPage1 START=0x840    END=0xBFF    PROTECTED
+CODEPAGE   NAME=app      START=0xC00    END=0xFFF    PROTECTED
+CODEPAGE   NAME=app1     START=0x1000   END=0x17FF   PROTECTED
+CODEPAGE   NAME=page3    START=0x1800   END=0x1FFF
+CODEPAGE   NAME=.idlocs  START=0x2000   END=0x2003   PROTECTED
+CODEPAGE   NAME=.config  START=0x2007   END=0x2007   PROTECTED
+
+SECTION    NAME=resVect  ROM=vectors    // Reset vectors
+SECTION    NAME=intVect	 ROM=vectors2   // vector de interrupcion
+
+//SECTION    NAME=sdoCode	 ROM=sdo        // 
+SECTION    NAME=isrCode	 ROM=isr        
+SECTION    NAME=nmtCode	 ROM=nmtPage1
+SECTION    NAME=spiCode	 ROM=spiPage0   // 
+SECTION    NAME=spiCode2 ROM=spiPage1   // 
+SECTION    NAME=eepCode  ROM=eepPage0   // 
+SECTION    NAME=eepCode2 ROM=eepPage1   // 
+SECTION    NAME=appTablas1 ROM=appTabla1   
+SECTION    NAME=appTablas2 ROM=appTabla2   
+SECTION    NAME=appTablas3 ROM=appTabla3   
+SECTION    NAME=appTablas4 ROM=appTabla4   
+//SECTION    NAME=pdoCode	 ROM=pdo        // 
+SECTION    NAME=appCode          ROM=app
+SECTION    NAME=appCode1         ROM=app1
+
+
+SECTION	   NAME=IDLOCS   ROM=.idlocs    // ID locations
+SECTION    NAME=CONFIG   ROM=.config    // Configuration bits location
+
+DATABANK   NAME=sfr0     START=0x0      END=0x1F     PROTECTED
+DATABANK   NAME=sfr1     START=0x80     END=0x9F     PROTECTED
+DATABANK   NAME=sfr2     START=0x100    END=0x10F    PROTECTED
+DATABANK   NAME=sfr3     START=0x180    END=0x18F    PROTECTED
+
+DATABANK   NAME=spiD     START=32     END=43       PROTECTED //12
+DATABANK   NAME=eepD     START=44     END=44       PROTECTED // 1
+DATABANK   NAME=isrD     START=45     END=54       PROTECTED //10
+DATABANK   NAME=nmtD     START=55     END=59       PROTECTED // 5
+DATABANK   NAME=pdoD     START=60     END=69       PROTECTED //10
+DATABANK   NAME=sdoD     START=70     END=98       PROTECTED //29
+DATABANK   NAME=appD     START=99     END=0x7F	   PROTECTED // max 30
+DATABANK   NAME=appD1	 START=0xA0   END=0xFF	   PROTECTED
+
+
+SECTION    NAME=spiData          RAM=spiD
+SECTION    NAME=eepVar           RAM=eepD
+SECTION    NAME=isrData          RAM=isrD
+SECTION    NAME=nmtData          RAM=nmtD
+SECTION    NAME=pdoData          RAM=pdoD
+SECTION    NAME=sdoData          RAM=sdoD
+SECTION    NAME=appData          RAM=appD
+SECTION    NAME=appData1         RAM=appD1
+
+
